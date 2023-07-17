@@ -1,23 +1,12 @@
-/* General Styles */
-body {
-	font-family: Arial, sans-serif;
-	background-color: #f4f4f4;
-	margin: 0;
-	padding: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-}
-
-.container {
+.custom-container {
 	max-width: 90%;
 	width: 90%;
 	margin: 0 auto;
 	padding: 20px;
-	background-color: #fff;
+	background-color: #f0f0f0;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	border-radius: 10px;
+	margin-bottom: 20px;
 }
 
 .lead {

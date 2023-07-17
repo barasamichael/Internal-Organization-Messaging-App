@@ -1,8 +1,13 @@
 from flask import request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import ValidationError, DataRequired, Length
+from wtforms import StringField, SubmitField, TextAreaField, IntegerField
+from wtforms.validators import ValidationError, DataRequired, Length, NumberRange
 from app.models import User
+
+class AssociationForm(FlaskForm):
+    assoc_user_id = IntegerField('User ID:', validators=[DataRequired(), NumberRange(min=1)])
+    assoc_username = StringField('Username:', validators=[DataRequired()])
+    submit = SubmitField('Send Request')
 
 
 class EditProfileForm(FlaskForm):

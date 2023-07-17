@@ -19,7 +19,7 @@
 							<button class="search-button"><i class="fas fa-search"></i></button>
 						</div>
 						<div class="add-user">
-							<i class="fas fa-user-plus"></i>
+							<a href = "{{ url_for('main.add_association') }}"><i class="fas fa-user-plus"></i></a>
 						</div>
 					</div>
 				</div>
@@ -28,11 +28,11 @@
 						{% for user in users %}
 						<div class="user">
 							<div class="user-image">
-								<img src = "{{ user.avatar(256) }}">
+								<img src="{{ user.avatar(256) }}">
 							</div>
 							<div class="user-details">
 								<h3>
-									<a href = "{{url_for('main.select_user', user_id = user.id)}}">
+									<a href="{{ url_for('main.select_user', user_id=user.id) }}">
 										{{ user.username }}
 									</a>
 								</h3>
@@ -53,7 +53,7 @@
 					<div class="contact-info">
 						{% if selected_user_id != 0 %}
 						<div class="contact-image">
-							<img src = "{{ selected_user.avatar(256) }}">
+							<img src="{{ selected_user.avatar(256) }}">
 						</div>
 						<div class="contact-details">
 							<h2>{{ selected_user.username }}</h2>
@@ -84,24 +84,30 @@
 					{% if current_user.id == message.sender_id %}
 					<div class="message sent">
 						<div class="message-sender">
-							<img src="{{ current_user.avatar(256) }}" alt="Sender Avatar" class = "avatar">
+							<img src="{{ current_user.avatar(256) }}" alt="Sender Avatar" class="avatar">
 							<span class="message-timestamp">
 								{{ moment(message.timestamp).format('dddd MMMM DD, YYYY h:mm A') }}
 							</span>
 						</div>
 						<div class="message-content">
+							{% if message.image_url %}
+							<img style = "width:200px; height: 200px; border-radius: 5px;" src="{{ url_for('static', filename=message.image_url) }}" class="message-image">
+							{% endif %}
 							<p>{{ message.body }}</p>
 						</div>
 					</div>
 					{% else %}
 					<div class="message received">
 						<div class="message-sender">
-							<img src="{{ selected_user.avatar(256) }}" alt="Receiver Avatar" class = "avatar">
+							<img src="{{ selected_user.avatar(256) }}" alt="Receiver Avatar" class="avatar">
 							<span class="message-timestamp">
 								{{ moment(message.timestamp).format('dddd MMMM DD, YYYY h:mm A') }}
 							</span>
 						</div>
 						<div class="message-content">
+							{% if message.image_url %}
+							<img  style = "width:200px; height: 200px; border-radius: 5px;" src="{{ url_for('static', filename=message.image_url) }}" class="message-image">
+							{% endif %}
 							<p>{{ message.body }}</p>
 						</div>
 					</div>
@@ -110,14 +116,20 @@
 					{% endif %}
 				</div>
 				<div class="message-entry">
-					<form action = "/send_message" method = "post">
-						<textarea id="message-input" name = "message-input" placeholder="Type your message"></textarea>
-						<button id="send-button" class="send-button"><i class="fas fa-paper-plane"></i></button>
+					<form action="/send_message" method="post" enctype="multipart/form-data">
+						<div class="message-entry-input">
+							<textarea id="message-input" name="message-input" placeholder="Type your message"></textarea>
+							<button id="send-button" class="send-button"><i class="fas fa-paper-plane"></i></button>
+						</div>
+						<div class="message-entry-file">
+							<input type="file" id="image-input" name="image" accept="image/*">
+							<label for="image-input"><i class="fas fa-file-image"></i></label>
+						</div>
 					</form>
 				</div>
-				</script>
-
 			</div>
-		</div>
+			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	</body>
 </html>

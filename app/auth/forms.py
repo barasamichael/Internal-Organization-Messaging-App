@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
-from wtforms.fields.html5 import DateField
+from wtforms.fields import DateField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from app.models import User
